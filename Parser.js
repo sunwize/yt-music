@@ -38,7 +38,7 @@ class Parser {
                             if (type === 'song') {
                                 song.album = {
                                     id: moreInfo.navigationEndpoint.browseEndpoint.browseId,
-                                    title: moreInfo.text
+                                    name: moreInfo.text
                                 };
                             } else if (type === 'video') {
                                 song.viewCount = moreInfo.text.split(' ')[0];
@@ -56,7 +56,7 @@ class Parser {
                             results.push({
                                 type: 'playlist',
                                 id: item.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchPlaylistEndpoint.playlistId,
-                                title: info0.runs[0].text,
+                                name: info0.runs[0].text,
                                 trackCount: parseInt(info1.runs[info1.runs.length - 1].text.split(' ')[0]),
                                 thumbnails: item.musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails
                             });
@@ -72,7 +72,7 @@ class Parser {
                             results.push({
                                 type: typeName,
                                 id: item.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId,
-                                title: info0.runs[0].text,
+                                name: info0.runs[0].text,
                                 author: {
                                     id: info1.runs[2].navigationEndpoint.browseEndpoint.browseId,
                                     name: info1.runs[2].text
@@ -119,7 +119,7 @@ class Parser {
         if (albumInfo.navigationEndpoint) {
             song.album = {
                 id: albumInfo.navigationEndpoint.browseEndpoint.browseId,
-                title: albumInfo.text
+                name: albumInfo.text
             };
         } else {
             song.viewCount = albumInfo.text.split(' ')[0];
@@ -156,7 +156,7 @@ class Parser {
                 },
                 album: {
                     id: albumInfo.navigationEndpoint.browseEndpoint.browseId,
-                    title: albumInfo.text
+                    name: albumInfo.text
                 },
                 thumbnails: s.musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails
             }
@@ -183,7 +183,7 @@ class Parser {
             return {
                 type: 'album',
                 id: info.navigationEndpoint.browseEndpoint.browseId,
-                title: info.text,
+                name: info.text,
                 year: parseInt(a.musicTwoRowItemRenderer.subtitle.runs[a.musicTwoRowItemRenderer.subtitle.runs.length - 1].text),
                 thumbnails: a.musicTwoRowItemRenderer.thumbnailRenderer.musicThumbnailRenderer.thumbnail.thumbnails
             }
@@ -195,7 +195,7 @@ class Parser {
             return {
                 type: 'single',
                 id: info.navigationEndpoint.browseEndpoint.browseId,
-                title: info.text,
+                name: info.text,
                 year: parseInt(a.musicTwoRowItemRenderer.subtitle.runs[a.musicTwoRowItemRenderer.subtitle.runs.length - 1].text),
                 thumbnails: a.musicTwoRowItemRenderer.thumbnailRenderer.musicThumbnailRenderer.thumbnail.thumbnails
             }
@@ -209,7 +209,7 @@ class Parser {
             return {
                 type,
                 id: info.navigationEndpoint.browseEndpoint.browseId,
-                title: info.text,
+                name: info.text,
                 author: {
                     name: f.musicTwoRowItemRenderer.subtitle.runs[2].text
                 },
@@ -265,7 +265,7 @@ class Parser {
         const info = data.frameworkUpdates.entityBatchUpdate.mutations.find(m => !!m.payload.musicAlbumRelease).payload.musicAlbumRelease;
 
         return {
-            title: info.title,
+            name: info.title,
             thumbnails: info.thumbnailDetails.thumbnails,
             author: artists.filter(a => info.primaryArtists.includes(a.id)),
             year: parseInt(info.releaseDate.year),
@@ -278,7 +278,7 @@ class Parser {
 
         return {
             type: 'playlist',
-            title: musicDetail.title.runs[0].text,
+            name: musicDetail.title.runs[0].text,
             trackCount: data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer.collapsedItemCount,
             thumbnails: musicDetail.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails,
             songs: this.parsePlaylistContents(data)
@@ -320,7 +320,7 @@ class Parser {
             if (albumInfo) {
                 song.album = {
                     id: albumInfo.navigationEndpoint.browseEndpoint.browseId,
-                    title: albumInfo.text
+                    name: albumInfo.text
                 }
             }
 
