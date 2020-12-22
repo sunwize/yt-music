@@ -1,0 +1,16 @@
+{
+  "name": "yt-music",
+  "version": "1.0.0",
+  "description": "",
+  "main": "YoutubeMusicAPI.js",
+  "scripts": {
+    "start": "echo start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "tough-cookie": "^4.0.0"
+  }
+}
